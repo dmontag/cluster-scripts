@@ -38,7 +38,9 @@ class Server
 	return nil if $? != 0
     evaled_result = eval(result)
 	ha_info = evaled_result[0]
+	return nil if ha_info.nil?
     instances = ha_info["attributes"].find{|i|i["name"] == "InstancesInCluster"}
+	return nil if instances.nil?
 	instance = instances["value"].find{|instance_info|instance_info["value"].find{|item| item["name"] == "machineId" && item["value"].to_i == id}}
 	return nil if instance.nil?
     latest_tx_id_item = instance["value"].find{|item| item["description"] == "lastCommittedTransactionId"}
@@ -50,7 +52,6 @@ end
 require "servers.rb"
 
 servers.each do |server|
-#  puts "#{server.host}\t" + (server.online? ? "online\t#{server.mode}\t#{server.latest_tx_id}" : "offline")
   print "#{Time.now} -- #{server.host}\t"
   if server.online?
     print "online"
