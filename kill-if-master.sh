@@ -6,10 +6,10 @@ if [ ! -z "`./status.rb | grep 'offline'`" ]; then
   exit
 fi
 
-if [ ! -z '`./status.rb | grep "$SERVER_ID @" | grep master`' ]; then 
-  sleep 10
+if [ ! -z "`./status.rb | grep "$SERVER_ID @" | grep master`" ]; then 
   PID=`cat /opt/neo4j-enterprise-1.5/data/neo4j-service.pid`
-  echo "Killing master process: $PID"
+  echo "Killing master process: $PID (id=$SERVER_ID)"
+  sleep 10
   kill -9 $PID
   sleep 1
   echo "Restarting Neo4j"
