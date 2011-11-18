@@ -52,7 +52,7 @@ end
 require "servers.rb"
 
 servers.each do |server|
-  print "#{Time.now} -- #{server.host}\t"
+  print "#{Time.now} -- #{server.id} @ #{server.host}\t"
   if server.online?
     print "online"
 	print "\t#{server.mode}"
