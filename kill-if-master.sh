@@ -2,7 +2,7 @@
 
 SERVER_ID=`cat /opt/neo4j-enterprise-1.5/conf/neo4j.properties | grep server_id | tr '=' ' ' | awk '{print $2}'`
 
-if [ ! -z '`./status.rb | grep "offline"`' ]; then 
+if [ ! -z "`./status.rb | grep 'offline'`" ]; then 
   exit
 fi
 
