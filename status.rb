@@ -34,7 +34,7 @@ class Server
 
   def latest_tx_id
     return nil if id.nil?
-    result = `curl -H "Content-Type:application/json" -d '["org.neo4j:name=High Availability,instance=*"]' http://#{server}/db/manage/server/jmx/query 2>/dev/null`.gsub(":","=>")
+    result = `curl -f -H "Content-Type:application/json" -d '["org.neo4j:name=High Availability,instance=*"]' http://#{server}/db/manage/server/jmx/query 2>/dev/null`.gsub(":","=>")
 	return nil if $? != 0
     evaled_result = eval(result)
 	ha_info = evaled_result[0]
