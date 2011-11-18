@@ -11,6 +11,9 @@ if [ ! -z "`./status.rb | grep "$SERVER_ID @" | grep leader`" ]; then
   echo "Killing ZK leader process: $PID (id=$SERVER_ID)"
   sleep 10
   kill -9 $PID
+  if [ ! "`./status.rb | grep 'follower' | wc -l`" -eq 2 ]; then 
+    exit
+  fi
   sleep 1
   echo "Restarting Neo4j"
   /opt/neo4j-enterprise-1.5/bin/neo4j-coordinator start
