@@ -11,7 +11,7 @@ if [ ! -z "`./status.rb | grep "$SERVER_ID @" | grep leader`" ]; then
   echo "Killing ZK leader process: $PID (id=$SERVER_ID)"
   sleep 2
   kill -9 $PID
-  if [ ! "`./status.rb | grep -E '(leader|follower|unknown)' | wc -l`" -eq 3 ]; then
+  if [ "`./status.rb | grep 'unknown' | wc -l`" -eq 3 ]; then
     exit
   fi
   sleep 1
