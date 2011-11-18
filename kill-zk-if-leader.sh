@@ -2,7 +2,8 @@
 
 SERVER_ID=`cat /opt/neo4j-enterprise-1.5/conf/neo4j.properties | grep server_id | tr '=' ' ' | awk '{print $2}'`
 
-if [ ! "`./status.rb | grep -E '(leader|follower|unknown)' | wc -l`" -eq 3 ]; then 
+if [ ! "`./status.rb | grep -E '(leader|follower)' | wc -l`" -eq 3 ]; then 
+  echo "Not all ZK running, skipping."
   exit
 fi
 
@@ -13,9 +14,7 @@ if [ ! -z "`./status.rb | grep "$SERVER_ID @" | grep leader`" ]; then
   kill -9 $PID
   sleep 1
   if [ "`./status.rb | grep 'unknown' | wc -l`" -eq 3 ]; then
-    exit
-  fi
-  if [ ! "`./status.rb | grep -E '(leader|follower|unknown)' | wc -l`" -eq 3 ]; then
+    echo "All ZK dead, not restarting."
     exit
   fi
   sleep 1
